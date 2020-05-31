@@ -2,7 +2,7 @@
 
 using namespace std;
 using ll=long long;
-
+//阶乘、模运算、离线计算
 int main() {
     ll n;
     cin >> n;

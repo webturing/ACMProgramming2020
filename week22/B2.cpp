@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 
 using namespace std;
-
+//模运算
 int main() {
     int a, b;
     while (cin >> a >> b) {
