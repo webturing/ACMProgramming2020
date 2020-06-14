@@ -19,4 +19,5 @@ int main() {
         }
     }
     cout << MAXstr << endl;
+    return 0;
 }
