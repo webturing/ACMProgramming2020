@@ -27,7 +27,7 @@ int main() {
     cout.tie(nullptr);
     int right = 0;
     for (string line; cin >> line;) {
-        auto p = min(line.find('+'), line.find('-'));
+        auto p = min(line.find('+'), line.find('-'));//unsigned
         line.insert(p, " ");
         line.insert(p + 2, " ");
 

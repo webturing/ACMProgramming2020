@@ -58,6 +58,7 @@ int main() {
     cin >> n;
     if (n & 1) {
         cout << "no solution";
+        return 0;
     }
     a.resize(n + 1);
     v.resize(n + 1);
@@ -66,6 +67,8 @@ int main() {
     a[1] = 1;
     v[1] = true;
     dfs(2);
-
+    if(!flag){
+        cout<<"no solution"<<endl;
+    }
     return 0;
 }
