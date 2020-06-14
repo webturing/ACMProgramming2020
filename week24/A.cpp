@@ -22,7 +22,7 @@ inline T read() {
 #define FORD(i, x, y) for (decay<decltype(x)>::type i = (x), _##i = (y); i > _##i; --i)
 
 int main() {
-    std::iostream::sync_with_stdio(false);
+    ios::sync_with_stdio(false);
     cin.tie(nullptr);
     cout.tie(nullptr);
     int right = 0;
