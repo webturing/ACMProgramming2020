@@ -1,5 +1,7 @@
 # 算法学习入门经典：最大子序列五种解法
 
+by ZHAO Jing(zj@webturing.com)
+
 ## O(n^3) 暴力
 
 - 思路最直观
@@ -8,7 +10,7 @@
 int max_sub_cube(vector<int> &v) {//O(n^3)
     int best = 0, n = int(v.size());
     for (int i = 0; i < n; i++)
-        for (int j = i + 1; j < n; j++) {
+        for (int j = i; j < n; j++) {
             int s = 0;
             for (int k = i; k <= j; k++) {
                 s += v[k];
@@ -28,7 +30,7 @@ int max_sub_square(vector<int> &v) {//O(n^2)
     partial_sum(b.begin(), b.end(), b.begin());//O(n)
     int best = 0, n = int(v.size());
     for (int i = 0; i < n; i++)
-        for (int j = i + 1; j < n; j++) {
+        for (int j = i; j < n; j++) {
             int s = i > 0 ? b[j] - b[i - 1] : b[j];
             best = max(best, s);
         }
@@ -46,7 +48,7 @@ int max_sub_linear_dp(vector<int> &v) {//O(n)
     vector<int> dp(v.size());
     dp[0] = v[0];
     for (auto i = 1; i < v.size(); i++) {
-        dp[i] = max(dp[i] + v[i], v[i]);
+        dp[i] = max(dp[i-1] + v[i], v[i]);
     }
     return *max_element(dp.begin(), dp.end());
 }
@@ -97,7 +99,6 @@ int max_sub_dc(vector<int> &v, int left, int right) {//O(nlog(n))
         sum_right += v[i];
         max_cross_right = max(sum_right, max_cross_right);
     }
-
     return max(max(max_left, max_right), max_cross_left + max_cross_right);
 }
 ```

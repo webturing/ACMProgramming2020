@@ -6,7 +6,6 @@ int main() {
 
     vector<string> v(istream_iterator<string>(cin), (istream_iterator<string>()));
     for_each(v.begin(), v.end(), [](string s) {
-
         for_each(s.begin(), s.end(), [](char c) {
             string st;
             st.push_back(c);
