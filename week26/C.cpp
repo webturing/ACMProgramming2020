@@ -6,98 +6,80 @@
 using namespace std;
 
 using ll=long long;
-#define endl '\n'
-#define FOR(i, x, y) for (decay<decltype(y)>::type i = (x), _##i = (y); i < _##i; ++i)
-#define FORD(i, x, y) for (decay<decltype(x)>::type i = (x), _##i = (y); i > _##i; --i)
-
 
 template<typename T=int>
 inline void oo(const string &str, T val) { cerr << str << val << endl; }
 
-#define lson l , m , rt << 1
-#define rson m , r , rt << 1 | 1
-
-const int maxn = 100005;
-int cnt[maxn << 2];
-int sum[maxn << 2];
-int X[maxn];
-
-struct Seg {
-    int h, l, r;
-    int s;
-
-    Seg() {}
-
-    Seg(int a, int b, int c, int d) : l(a), r(b), h(c), s(d) {}
-
-    bool operator<(const Seg &cmp) const {
-        return h < cmp.h;
-    }
-} ss[maxn];
-
-void PushUp(int rt, int l, int r) {
-    if (cnt[rt]) sum[rt] = X[r] - X[l];
-    else if (l == r) sum[rt] = 0;
-    else sum[rt] = sum[rt << 1] + sum[rt << 1 | 1];
+template<typename T=int>
+inline T read() {
+    T x;
+    cin >> x;
+    return x;
 }
 
-void update(int L, int R, int c, int l, int r, int rt) {
-    if (L <= l && r <= R) {
-        cnt[rt] += c;
-        PushUp(rt, l, r);
+#define endl '\n'
+#define FOR(i, x, y) for (decay<decltype(y)>::type i = (x), _##i = (y); i < _##i; ++i)
+#define FORD(i, x, y) for (decay<decltype(x)>::type i = (x), _##i = (y); i > _##i; --i)
+struct data {
+    ll x1, x2, y;
+    int flag;
+} a[801];
+ll hash[201];
+ll sum[801];
+int col[801];
+
+inline bool cp(data a, data b) { return a.y < b.y; }
+
+void pushup(int size, int l, int r) {
+    if (col[size])sum[size] = hash[r + 1] - hash[l];
+    else if (l == r)sum[size] = 0;
+    else sum[size] = sum[size * 2] + sum[size * 2 + 1];
+}
+
+void update(int L, int R, int flag, int l, int r, int size) {
+    if (L <= l && R >= r) {
+        col[size] += flag;
+        pushup(size, l, r);
         return;
     }
-    int m = (l + r) >> 1;
-    if (L < m) update(L, R, c, lson);//注意不是小于等于
-    if (m < R) update(L, R, c, rson);
-    PushUp(rt, l, r);
-}
-
-int Bin(int key, int n, int X[]) {
-    int l = 0, r = n - 1;
-    while (l <= r) {
-        int m = (l + r) >> 1;
-        if (X[m] == key) return m;
-        if (X[m] < key) l = m + 1;
-        else r = m - 1;
-    }
-    return -1;
+    int m = (l + r) / 2;
+    if (L <= m)update(L, R, flag, l, m, size * 2);
+    if (R > m)update(L, R, flag, m + 1, r, size * 2 + 1);
+    pushup(size, l, r);
 }
 
 int main() {
     int T;
     cin >> T;
     while (T--) {
-        int W, H;
-        cin >> W >> H;
-        int tot = W * H;
-        int m = 0, n;
-        cin >> n;
-        while (n--) {
-            int a, b, c, d;
-            cin >> a >> b >> c >> d;
-            X[m] = a;
-            ss[m++] = Seg(a, c, b, 1);
-            X[m] = c;
-            ss[m++] = Seg(a, c, d, -1);
-        }
-        sort(X, X + m);
-        sort(ss, ss + m);
 
-        int k = unique(X, X + m) - X;
-        for (int i = 1; i < m; i++) {
-            if (X[i] != X[i - 1]) X[k++] = X[i];
+        int L, H, n;
+        cin >> L >> H >> n;
+        int x1, y1, x2, y2;
+        for (int i = 1; i <= n; i++) {
+            cin >> x1 >> y1 >> x2 >> y2;
+            a[2 * i - 1].x1 = a[2 * i].x1 = x1;
+            a[2 * i - 1].x2 = a[2 * i].x2 = x2;
+            a[2 * i - 1].y = y1;
+            a[2 * i].y = y2;
+            a[2 * i - 1].flag = 1;
+            a[2 * i].flag = -1;
+            hash[2 * i - 1] = x1;
+            hash[2 * i] = x2;
         }
-        memset(cnt, 0, sizeof(cnt));
+        sort(a + 1, a + 2 * n + 1, cp);
+        sort(hash + 1, hash + 2 * n + 1);
+        memset(col, 0, sizeof(col));
         memset(sum, 0, sizeof(sum));
-        int ret = 0;
-        for (int i = 0; i < m - 1; i++) {
-            int l = Bin(ss[i].l, k, X);
-            int r = Bin(ss[i].r, k, X);
-            if (l <= r) update(l, r, ss[i].s, 0, k - 1, 1);
-            ret += sum[1] * (ss[i + 1].h - ss[i].h);
+        ll ans = 0;
+        for (int i = 1; i <= 2 * n; i++) {
+            int l = lower_bound(hash + 1, hash + 2 * n + 1, a[i].x1) - hash;
+            int r = lower_bound(hash + 1, hash + 2 * n + 1, a[i].x2) - hash - 1;
+            if (l <= r)update(l, r, a[i].flag, 1, 2 * n, 1);
+            ans += sum[1] * (a[i + 1].y - a[i].y);
         }
-        cout << tot - ret << endl;
+        cout << L * H - ans << endl;
     }
+
     return 0;
 }
