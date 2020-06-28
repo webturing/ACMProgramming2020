@@ -25,31 +25,11 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     cout.tie(nullptr);
-    int n, m, k;
-    while (cin >> n >> m >> k) {
 
-        list<int> ls;
-        for (int i = 1; i <= n; i++)ls.push_back(i);
-        auto it = ls.begin();
-        int s = 1;
-        while (ls.size() > k) {
-            if (s % m == 0) {
-                it = ls.erase(it);
-                s = 0;
-                ++s;
-            } else {
-                ++it;
-                ++s;
-            }
-            if (it == ls.end()) {
-                it = ls.begin();
-            }
-
-        }
-        copy(ls.begin(), ls.end(), ostream_iterator<int>(cout, " "));
-        cout << endl;
-
-
+    for (ll n; cin >> n;) {
+        double r = cbrt(n);
+        if (ll(r) == r)cout << "YES" << endl;
+        else cout << "NO" << endl;
     }
 
     return 0;

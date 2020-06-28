@@ -25,32 +25,30 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     cout.tie(nullptr);
-    int n, m, k;
-    while (cin >> n >> m >> k) {
+    vector<ll> cube;
 
-        list<int> ls;
-        for (int i = 1; i <= n; i++)ls.push_back(i);
-        auto it = ls.begin();
-        int s = 1;
-        while (ls.size() > k) {
-            if (s % m == 0) {
-                it = ls.erase(it);
-                s = 0;
-                ++s;
+    for (ll n; cin >> n;) {
+        n = abs(n);
+        ll left = 0, right = 1 << 10;//cbrt(INT_MAX)
+        bool find = false;
+        while (left <= right) {
+            ll mid = (left + right) / 2;
+            ll cmp = (mid * mid * mid) - n;
+            if (cmp == 0) {
+                find = true;
+                break;
+
+            }
+            if (cmp < 0) {
+                left = mid + 1;
             } else {
-                ++it;
-                ++s;
+                right = mid - 1;
             }
-            if (it == ls.end()) {
-                it = ls.begin();
-            }
-
         }
-        copy(ls.begin(), ls.end(), ostream_iterator<int>(cout, " "));
-        cout << endl;
 
 
+        if (find)cout << "YES" << endl;
+        else cout << "NO" << endl;
     }
-
     return 0;
 }
