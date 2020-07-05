@@ -35,3 +35,8 @@ int main() {
 
     return 0;
 }
+/**
+ * 字符串查找（匹配函数） s.find(t)返回是第一次出现子串t的位置(unsigned int) 如果找不到返回string::npos 有符号整数值为-1
+ * 字符串查找（匹配函数） s.find(t,pos)返回是从pos开始第一次出现子串t的位置(unsigned int) 如果找不到返回string::npos 有符号整数值为-1
+ * 统计单词次数的时候要越过已经匹配的部分pos+=t.size()
+*/

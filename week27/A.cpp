@@ -31,7 +31,6 @@ string f(int n) {
     s += string(n - 2, 'U');
     s.push_back('R');
     return s + f(n - 2);
-
 }
 
 int main() {
@@ -64,3 +63,9 @@ int main() {
     }
     return 0;
 }
+/**
+ * 1. 方向的递归
+ * 2. map/pair
+ * 3. 模拟
+ * 4. vector嵌套生成n*n的二维数组 且初始化为0
+*/

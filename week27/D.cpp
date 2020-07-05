@@ -37,6 +37,7 @@ int main() {
         }
         if (flag)primers.emplace_back(k);
     }
+    cerr<<primers.size()<<endl;
     int n(read());
     int tot = 0;
     if (n >= 3)++tot;
@@ -49,3 +50,6 @@ int main() {
     cout << tot << endl;
     return 0;
 }
+/**
+1. 素数表的构造（滚动法，筛法）
+ 2. 二分查找

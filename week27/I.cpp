@@ -26,13 +26,10 @@ int main() {
     cin.tie(nullptr);
     cout.tie(nullptr);
     for (vector<int> v(3); cin >> v[0] >> v[1] >> v[2];) {
-        if (all_of(v.begin(), v.end(), [](int x) {
-            return x == -1;
-        }))
+        //if (all_of(v.begin(), v.end(), [](int x) ->bool{return x == -1;}))
+        if (count(v.begin(), v.end(), -1) == 3)
             break;
-        auto pos = find_if(v.begin(), v.end(), [](int x) -> bool {
-            return x <= 168;
-        });
+        auto pos = find_if(v.begin(), v.end(), [](int x) -> bool { return x <= 168; });
         if (pos == v.end()) {
             cout << "NO CRASH" << endl;
         } else {
@@ -42,3 +39,9 @@ int main() {
 
     return 0;
 }
+/**
+ * 1. all_of(start,end,predict) 从[start,end)都满足谓词predict
+ * 2. count
+ * 3. find(start,end,k)顺序查找关键字k,返回k首次出现的位置，如果找不到返回v.end()
+ * 4. find_if(start,end,predict) 顺序查找关键字k 满足谓词predict(k)=true,返回k首次出现的位置，如果找不到返回v.end()
+*/
