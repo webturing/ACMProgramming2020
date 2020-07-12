@@ -26,9 +26,9 @@ int main() {
     cin.tie(nullptr);
     cout.tie(nullptr);
     for (double a, b, c; cin >> a >> b >> c;) {
-        double x = acos((b * b + c * c - a * a) / (2 * b * c));
+        double A = acos((b * b + c * c - a * a) / (2 * b * c));
         //cerr << "x=" << x << endl;
-        double R = a / sin(x) / 2;
+        double R = a / sin(A) / 2;
         double p = (a + b + c) / 2;
         double S = sqrt(p * (p - a) * (p - b) * (p - c));
         double r = S / p;
